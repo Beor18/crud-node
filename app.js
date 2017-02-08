@@ -11,7 +11,7 @@ app.set('view engine', 'ejs')
 con = mysql.createConnection({
 	host:"localhost",
 	user:"root",
-	password:"romanos18",
+	password:"root",
 	database:"nodeapp"
 });
 
@@ -40,7 +40,8 @@ app.post("/save",function(req,res){
 	var nombre = req.body.person.nombre;
 	var apellido = req.body.person.apellido;
 	var telefono = req.body.person.telefono;
-	con.query("insert into person (nombre,apellido,telefono,created_at) value (\""+nombre+"\",\""+apellido+"\",\""+telefono+"\",NOW())",function(e,r){
+	var email = req.body.person.email;
+	con.query("insert into person (nombre,apellido,telefono,email,created_at) value (\""+nombre+"\",\""+apellido+"\",\""+telefono+"\",\""+email+"\",NOW())",function(e,r){
 	});
 	res.redirect("/");
 });
@@ -58,8 +59,9 @@ app.post("/update",function(req,res){
 	var id = req.body.person.id;
 	var nombre = req.body.person.nombre;
 	var apellido = req.body.person.apellido;
-	var telefono = req.body.person.apellido;
-	con.query(" update person set nombre=\""+nombre+"\",apellido=\""+apellido+"\",telefono=\""+telefono+"\" where id="+id,function(e,r){
+	var telefono = req.body.person.telefono;
+	var email = req.body.person.email;
+	con.query(" update person set nombre=\""+nombre+"\",apellido=\""+apellido+"\",telefono=\""+telefono+"\",email=\""+email+"\" where id="+id,function(e,r){
 	});
 	res.redirect("/edit/"+id);
 });
