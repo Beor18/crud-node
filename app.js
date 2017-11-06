@@ -7,6 +7,12 @@ var bodyParser = require('body-parser');
 var book = require('./routes/book');
 var app = express();
 
+var mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
+mongoose.connect('mongodb://localhost/mern-crud', { useMongoClient: true, promiseLibrary: require('bluebird') })
+  .then(() =>  console.log('conexion exitosa!'))
+  .catch((err) => console.error(err));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
